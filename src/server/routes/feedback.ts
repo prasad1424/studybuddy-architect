@@ -1,15 +1,15 @@
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../config/db';
 import { io } from '../index';
 
 const router = express.Router();
 
 // Get all feedback for a student
-router.get('/received', async (req, res) => {
+router.get('/received', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
-    const userRole = req.user.role;
+    const userId = req.user?.id;
+    const userRole = req.user?.role;
     
     // Only students can view feedback they've received
     if (userRole !== 'student') {
@@ -33,10 +33,10 @@ router.get('/received', async (req, res) => {
 });
 
 // Get all feedback given by a mentor/parent
-router.get('/given', async (req, res) => {
+router.get('/given', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
-    const userRole = req.user.role;
+    const userId = req.user?.id;
+    const userRole = req.user?.role;
     
     // Only mentors/parents can view feedback they've given
     if (userRole !== 'mentor' && userRole !== 'parent') {
@@ -60,10 +60,10 @@ router.get('/given', async (req, res) => {
 });
 
 // Submit new feedback
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const authorId = req.user.id;
-    const authorRole = req.user.role;
+    const authorId = req.user?.id;
+    const authorRole = req.user?.role;
     const { student_id, message, type } = req.body;
     
     // Only mentors/parents can submit feedback
@@ -99,9 +99,9 @@ router.post('/', async (req, res) => {
 });
 
 // Mark feedback as helpful/read
-router.patch('/:feedbackId', async (req, res) => {
+router.patch('/:feedbackId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { feedbackId } = req.params;
     const { helpful } = req.body;
     

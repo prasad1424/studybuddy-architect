@@ -1,13 +1,13 @@
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../config/db';
 
 const router = express.Router();
 
 // Get user profile
-router.get('/profile', async (req, res) => {
+router.get('/profile', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     
     const result = await db.query(
       'SELECT id, name, email, role, university, major, join_date FROM users WHERE id = $1',
@@ -26,9 +26,9 @@ router.get('/profile', async (req, res) => {
 });
 
 // Update user profile
-router.put('/profile', async (req, res) => {
+router.put('/profile', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { name, university, major, study_preferences } = req.body;
     
     // Update user details
@@ -52,9 +52,9 @@ router.put('/profile', async (req, res) => {
 });
 
 // Get user's academic goals
-router.get('/goals', async (req, res) => {
+router.get('/goals', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     
     const result = await db.query(
       'SELECT * FROM academic_goals WHERE user_id = $1 ORDER BY created_at DESC',
@@ -69,9 +69,9 @@ router.get('/goals', async (req, res) => {
 });
 
 // Create a new academic goal
-router.post('/goals', async (req, res) => {
+router.post('/goals', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { title, description, target_date, progress } = req.body;
     
     const result = await db.query(
@@ -90,9 +90,9 @@ router.post('/goals', async (req, res) => {
 });
 
 // Update an academic goal
-router.put('/goals/:goalId', async (req, res) => {
+router.put('/goals/:goalId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { goalId } = req.params;
     const { title, description, target_date, progress } = req.body;
     

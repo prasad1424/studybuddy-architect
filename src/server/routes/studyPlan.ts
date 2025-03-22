@@ -1,14 +1,14 @@
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../config/db';
 import { io } from '../index';
 
 const router = express.Router();
 
 // Get all study plans for a user
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     
     const result = await db.query(
       'SELECT * FROM study_plans WHERE user_id = $1 ORDER BY created_at DESC',
@@ -23,9 +23,9 @@ router.get('/', async (req, res) => {
 });
 
 // Get a single study plan by ID
-router.get('/:planId', async (req, res) => {
+router.get('/:planId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId } = req.params;
     
     const result = await db.query(
@@ -56,9 +56,9 @@ router.get('/:planId', async (req, res) => {
 });
 
 // Create a new study plan
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { title, description, start_date, end_date, subjects } = req.body;
     
     const result = await db.query(
@@ -83,9 +83,9 @@ router.post('/', async (req, res) => {
 });
 
 // Update a study plan
-router.put('/:planId', async (req, res) => {
+router.put('/:planId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId } = req.params;
     const { title, description, start_date, end_date, subjects } = req.body;
     
@@ -109,9 +109,9 @@ router.put('/:planId', async (req, res) => {
 });
 
 // Delete a study plan
-router.delete('/:planId', async (req, res) => {
+router.delete('/:planId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId } = req.params;
     
     // First delete associated tasks
@@ -138,9 +138,9 @@ router.delete('/:planId', async (req, res) => {
 });
 
 // Get all tasks for a study plan
-router.get('/:planId/tasks', async (req, res) => {
+router.get('/:planId/tasks', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId } = req.params;
     
     // First check if the plan belongs to this user
@@ -166,9 +166,9 @@ router.get('/:planId/tasks', async (req, res) => {
 });
 
 // Create a new task for a study plan
-router.post('/:planId/tasks', async (req, res) => {
+router.post('/:planId/tasks', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId } = req.params;
     const { title, subject, due_date, duration, priority } = req.body;
     
@@ -205,9 +205,9 @@ router.post('/:planId/tasks', async (req, res) => {
 });
 
 // Update task completion status
-router.patch('/:planId/tasks/:taskId', async (req, res) => {
+router.patch('/:planId/tasks/:taskId', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     const { planId, taskId } = req.params;
     const { completed } = req.body;
     

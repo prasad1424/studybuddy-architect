@@ -5,6 +5,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { Request, Response, NextFunction } from 'express';
 
 // Import routes
 import authRoutes from './routes/auth';
@@ -37,14 +38,14 @@ app.use(cors());
 app.use(express.json());
 
 // Authenticate middleware for protected routes
-const authenticate = (req: any, res: any, next: any) => {
+const authenticate = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       return res.status(401).json({ message: 'Authentication required' });
     }
     
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string | number; role: string };
     req.user = decoded;
     next();
   } catch (error) {

@@ -1,5 +1,5 @@
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import db from '../config/db';
 import { io } from '../index';
 import axios from 'axios';
@@ -7,9 +7,9 @@ import axios from 'axios';
 const router = express.Router();
 
 // Get AI-powered study recommendations for a student
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     
     // Get recent recommendations from the database
     const result = await db.query(
@@ -25,9 +25,9 @@ router.get('/', async (req, res) => {
 });
 
 // Generate new AI recommendations
-router.post('/generate', async (req, res) => {
+router.post('/generate', async (req: Request, res: Response) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id;
     
     // Get user's study data
     const userDataQuery = await db.query(
