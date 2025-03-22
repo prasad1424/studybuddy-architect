@@ -10,7 +10,8 @@ import {
   BookOpen,
   Clock,
   Pencil,
-  School
+  School,
+  Plus
 } from 'lucide-react';
 import { 
   Card, 
