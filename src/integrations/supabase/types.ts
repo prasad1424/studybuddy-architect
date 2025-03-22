@@ -24,6 +24,122 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string | null
+          id: string
+          major: string | null
+          name: string | null
+          role: string | null
+          study_preferences: Json | null
+          university: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          major?: string | null
+          name?: string | null
+          role?: string | null
+          study_preferences?: Json | null
+          university?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          major?: string | null
+          name?: string | null
+          role?: string | null
+          study_preferences?: Json | null
+          university?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      study_plans: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          end_date: string
+          id: string
+          start_date: string
+          subjects: Json | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          end_date: string
+          id?: string
+          start_date: string
+          subjects?: Json | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          end_date?: string
+          id?: string
+          start_date?: string
+          subjects?: Json | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_tasks: {
+        Row: {
+          completed: boolean | null
+          created_at: string | null
+          due_date: string | null
+          duration: string | null
+          id: string
+          plan_id: string | null
+          priority: string | null
+          subject: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          completed?: boolean | null
+          created_at?: string | null
+          due_date?: string | null
+          duration?: string | null
+          id?: string
+          plan_id?: string | null
+          priority?: string | null
+          subject?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          completed?: boolean | null
+          created_at?: string | null
+          due_date?: string | null
+          duration?: string | null
+          id?: string
+          plan_id?: string | null
+          priority?: string | null
+          subject?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_tasks_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "study_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
